@@ -1,3 +1,4 @@
 # if passwords present remove from git
 
-FLASK_APP=microblog.py
+# Tells flask where to find the application
+FLASK_APP=microblog.py 
