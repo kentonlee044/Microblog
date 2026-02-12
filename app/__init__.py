@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager # Manages user logged in state. Remembers that the user is logged in and provides the 'remember me' functionality
 import logging
 from logging.handlers import RotatingFileHandler, SMTPHandler
+from flask_mail import Mail
 import os
 
 
@@ -14,6 +15,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
+mail = Mail(app)
 
 if not app.debug:
     if app.config['MAIL_SERVER']:
