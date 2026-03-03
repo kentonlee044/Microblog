@@ -11,8 +11,6 @@ import jwt
 
 
 '''
-Whenever making changes to the schema use 'flask db migrate -m "<message>" to generate a new migration scripts based on changes in the models and then to apply it 'flask db upgrade' (downgrade to rollback).
-
 SQLAlchemy provides it's own __init__ hence you don't need to call it unless you want to add custom functionality
 '''
 # Followers table 

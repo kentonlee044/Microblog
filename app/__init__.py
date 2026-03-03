@@ -16,7 +16,7 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
-login.login_view = 'login'
+login.login_view = 'login' # redirected to /login endpoint if user fails authentication check on routes marked @login_required
 mail = Mail(app)
 moment = Moment(app) 
 
@@ -50,8 +50,4 @@ if not app.debug:
 
 from app import routes, models, errors
 
-'''
-flask_sqlalchemy is a wrapper for sql where you can use high level entities such as classes, methods,objects to manage a database instead of using tables and SQL. it handles the conversion for you
 
-flask_migrate is a wrapper for Alembic which is a database migration framework for SQLAlchemy. Used when the existing database needs updates and changed made to it so this framework helps migrate data to a new modified structure
-'''
