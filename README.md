@@ -2,9 +2,9 @@
 
 A simple blogging web application where users can create posts, view other users’ posts, and interact in a basic social feed. Users can register, log in, and manage their content.  
 
-> ** 💡 Note:** This project is a learning exercise following a Flask tutorial to practice building web applications. It demonstrates core Flask concepts such as routing, templates, forms, authentication, database models, and session management. It is intended for educational purposes
+> **💡 Note:** This project is a learning exercise following a Flask tutorial to practice building web applications. It demonstrates core Flask concepts such as routing, templates, forms, authentication, database models, and session management. It is intended for educational purposes
 
-> ** ⚠️ Limitations:** Flask-Mail has not yet been fully configured. 
+> **⚠️ Limitations:** Flask-Mail has not yet been fully configured. 
 
 ---
 
