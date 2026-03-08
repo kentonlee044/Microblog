@@ -1,13 +1,18 @@
-from flask import Flask
+from flask import Flask, request
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate 
 from flask_login import LoginManager # Manages user logged in state. Remembers that the user is logged in and provides the 'remember me' functionality
 from flask_moment import Moment
+from flask_babel import Babel, lazy_gettext as _l
 import logging
 from logging.handlers import RotatingFileHandler, SMTPHandler
 from flask_mail import Mail
 import os
+
+def get_locale():
+    return request.accept_language.best_match(app.config['LANGUAGES'])
+    # return 'zh'
 
 # wrapping app with libraries creates a context processor which is a function that Flask calls every time a template is to be rendered. And it fills in variables without every being passed (acts like a global variable but only for templates).
 # Context processors are specific to Flask
@@ -17,8 +22,10 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login' # redirected to /login endpoint if user fails authentication check on routes marked @login_required
+login.login_message = _l('Please log in to access this page')
 mail = Mail(app)
 moment = Moment(app) 
+babel = Babel(app, locale_selector=get_locale)
 
 if not app.debug:
     if app.config['MAIL_SERVER']:

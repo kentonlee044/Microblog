@@ -26,7 +26,8 @@ A simple blogging web application where users can create posts, view other users
 - **Flask-Login** – Manages user authentication. Provides `login_user()`, `logout_user()`, `current_user`, `@login_required`, and `UserMixin`. Uses Flask sessions to persist login state.  
 - **Flask-Moment** – Integrates [Moment.js](https://momentjs.com/) into Jinja templates. Simplifies formatting, parsing, and displaying timestamps in different timezones.  
 - **Flask-Mail** – Adds email sending capabilities to Flask. Useful for password resets or notifications (note: may require SMTP configuration).  
-- **Flask-WTF** – Integrates [WTForms](https://wtforms.readthedocs.io/) with Flask. Adds CSRF protection and helper methods like `validate_on_submit()`.  
+- **Flask-WTF** – Integrates [WTForms](https://wtforms.readthedocs.io/) with Flask. Adds CSRF protection and helper methods like `validate_on_submit()`. 
+- **flask-babel** - Language support 
 
 ### 📝 Form Handling
 
@@ -79,6 +80,51 @@ flask db upgrade
 # Rollback (Optional)
 flask db downgrade
 ```
+
+### Translation Files
+---
+```
+pybabel extract -F babel.cfg -k _l -o messages.pot .
+```
+- pybabel extract command reads the configuration file given in the -F option, then scans all the code and template files in the directories that match the configured sources, starting from the directory given in the command (the current directory or . in this case)
+- By default, pybabel will look for _() as a text marker, but I have also used the lazy version, which I imported as _l(), so I need to tell the tool to look for those too with the -k _l
+- The -o option provides the name of the output file.
+```
+pybabel init -i messages.pot -d app/translations -l zh 
+``` 
+Starts the process of creating a translation for each language that is to be supported in addition to the base one (in this case chinese)
+
+- The pybabel init command takes the messages.pot file as input and writes a new language catalog to the directory given in the -d option for the language specified in the -l option. I'm going to be installing all the translations in the app/translations directory, because that is where Flask-Babel will expect translation files to be by default. 
+- The command will create a zh subdirectory inside this directory for the chinese data files. In particular, there will be a new file named app/translations/zh/LC_MESSAGES/messages.po, that is where the translations need to be made.
+
+- If you want to support other languages, just repeat the above command with each of the language codes you want, so that each language gets its own repository with a messages.po file.
+
+- This messages.po file that created in each language repository uses a format that is a standard for language translations, the format used by the `gettext` utility. 
+
+To generate a new language without the complexity of the above code run:
+```
+flask translate init <language-code>
+```
+
+To compile:
+```
+pybabel compile -d app/translations
+
+# Shortened to (in app/cli):
+flask translate compile 
+```
+
+If you missed some text, wrap them with `_()` or `_l()` then
+```
+pybabel extract -F babel.cfg -k _l -o messages.pot .
+pybabel update -i messages.pot -d app/translations
+
+
+# shortened to (in app/cli):
+flask translate update
+```
+- extract command generates a new version of messages.pot with the previous texts and anything you just wrapped
+update command merges the new messages.pot file and messages.po
 
 # ▶️ Run the Application
 ```
