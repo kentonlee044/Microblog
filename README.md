@@ -52,6 +52,12 @@ A simple blogging web application where users can create posts, view other users
 ---
 
 ## ⚙️ Setup
+### Create Python environment
+```
+python -m venv venv
+source venv/bin/activate // activate environment
+deactivate               // exit envionrment
+```
 
 ### 📥 Install dependencies
 
